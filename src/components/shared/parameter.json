@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_parameters",
+  "info": {
+    "displayName": "Parameter",
+    "icon": "cog"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

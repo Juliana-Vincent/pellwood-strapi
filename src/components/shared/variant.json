@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_variants",
+  "info": {
+    "displayName": "Variant",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "inStock": {
+      "type": "boolean"
+    },
+    "weight": {
+      "type": "string"
+    }
+  }
+}

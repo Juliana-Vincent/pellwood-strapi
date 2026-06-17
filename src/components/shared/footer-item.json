@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_footer_items",
+  "info": {
+    "displayName": "FooterItem",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    }
+  }
+}
