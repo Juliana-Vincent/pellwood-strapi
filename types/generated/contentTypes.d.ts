@@ -450,9 +450,6 @@ export interface ApiArchiveArchive extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    i18n: {
-      localized: true;
-    };
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
@@ -460,6 +457,7 @@ export interface ApiArchiveArchive extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -485,6 +483,7 @@ export interface ApiArchiveArchive extends Struct.CollectionTypeSchema {
         };
       }>;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -506,13 +505,11 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    i18n: {
-      localized: true;
-    };
   };
   attributes: {
     category: Schema.Attribute.Relation<'manyToOne', 'api::archive.archive'>;
     chapters: Schema.Attribute.Component<'shared.chapter', true> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -536,6 +533,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         };
       }>;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -583,6 +581,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
         };
       }>;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -664,9 +663,6 @@ export interface ApiMenuMenu extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    i18n: {
-      localized: true;
-    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -686,6 +682,7 @@ export interface ApiMenuMenu extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -714,7 +711,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     linkedProducts: Schema.Attribute.Relation<
       'manyToMany',
       'api::product.product'
@@ -732,7 +729,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    price: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     SEOdescription: Schema.Attribute.Text;
     slug: Schema.Attribute.UID &
@@ -742,12 +739,14 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         };
       }>;
     text: Schema.Attribute.Blocks &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
     title: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

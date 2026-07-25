@@ -8,11 +8,9 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "i18n": {
-      "localized": true
-    }
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
@@ -20,11 +18,11 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "slug": {
       "type": "uid",
-      "targetAttribute": "title",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -33,10 +31,10 @@
     },
     "image": {
       "type": "media",
+      "multiple": false,
       "allowedTypes": [
         "images"
-      ],
-      "multiple": false
+      ]
     },
     "category": {
       "type": "relation",
@@ -46,13 +44,14 @@
     },
     "chapters": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.chapter",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "component": "shared.chapter",
+      "repeatable": true,
+      "required": true
     }
   }
 }

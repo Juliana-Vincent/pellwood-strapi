@@ -8,11 +8,9 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "i18n": {
-      "localized": true
-    }
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
@@ -20,11 +18,11 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "slug": {
       "type": "uid",
-      "targetAttribute": "title",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -45,7 +43,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "articles": {
       "type": "relation",

@@ -8,11 +8,9 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "i18n": {
-      "localized": true
-    }
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
@@ -20,7 +18,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "location": {
       "type": "enumeration",
@@ -33,13 +32,13 @@
     },
     "items": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.menu-item",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "component": "shared.menu-item",
+      "repeatable": true
     }
   }
 }
