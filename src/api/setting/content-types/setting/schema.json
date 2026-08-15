@@ -8,11 +8,9 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "i18n": {
-      "localized": true
-    }
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
@@ -32,13 +30,32 @@
     },
     "footer": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.footer-item",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "component": "shared.footer-item",
+      "repeatable": true
+    },
+    "deliveryOptions": {
+      "type": "component",
+      "component": "shared.shipping",
+      "repeatable": true
+    },
+    "paymentOptions": {
+      "type": "component",
+      "component": "shared.shipping",
+      "repeatable": true
+    },
+    "discountThreshold": {
+      "type": "decimal"
+    },
+    "deliveryFreeThreshold": {
+      "type": "decimal"
+    },
+    "discountRatePercent": {
+      "type": "integer"
     }
   }
 }

@@ -74,6 +74,18 @@ export interface SharedParameter extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedShipping extends Struct.ComponentSchema {
+  collectionName: 'components_shared_shippings';
+  info: {
+    displayName: 'Shipping';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    payOnline: Schema.Attribute.Boolean;
+    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedVariant extends Struct.ComponentSchema {
   collectionName: 'components_shared_variants';
   info: {
@@ -97,6 +109,7 @@ declare module '@strapi/strapi' {
       'shared.footer-item': SharedFooterItem;
       'shared.menu-item': SharedMenuItem;
       'shared.parameter': SharedParameter;
+      'shared.shipping': SharedShipping;
       'shared.variant': SharedVariant;
     }
   }

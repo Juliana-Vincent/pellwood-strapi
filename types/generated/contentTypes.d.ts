@@ -774,20 +774,21 @@ export interface ApiSettingSetting extends Struct.SingleTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    i18n: {
-      localized: true;
-    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    deliveryFreeThreshold: Schema.Attribute.Decimal;
+    deliveryOptions: Schema.Attribute.Component<'shared.shipping', true>;
     description: Schema.Attribute.Text &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
+    discountRatePercent: Schema.Attribute.Integer;
+    discountThreshold: Schema.Attribute.Decimal;
     footer: Schema.Attribute.Component<'shared.footer-item', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -800,6 +801,7 @@ export interface ApiSettingSetting extends Struct.SingleTypeSchema {
       'api::setting.setting'
     > &
       Schema.Attribute.Private;
+    paymentOptions: Schema.Attribute.Component<'shared.shipping', true>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{

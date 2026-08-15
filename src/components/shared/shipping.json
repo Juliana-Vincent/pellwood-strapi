@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_shippings",
+  "info": {
+    "displayName": "Shipping"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "payOnline": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}
