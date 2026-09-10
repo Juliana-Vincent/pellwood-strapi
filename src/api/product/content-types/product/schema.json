@@ -79,7 +79,7 @@
           "localized": true
         }
       },
-      "required": true
+      "required": false
     },
     "variants": {
       "type": "component",
@@ -120,6 +120,22 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product"
+    },
+    "SEOtitle": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "sort": {
+      "type": "integer",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
