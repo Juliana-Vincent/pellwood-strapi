@@ -10,8 +10,8 @@ const config: Core.Config.Middlewares = [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'pellwood-strapi.supabase.co'],
-          'media-src': ["'self'", 'data:', 'blob:', 'pellwood-strapi.supabase.co'],
+          'img-src': ["'self'", 'data:', 'blob:', 'pawdlzmdumjinndgowct.storage.supabase.co'],
+          'media-src': ["'self'", 'data:', 'blob:', 'pawdlzmdumjinndgowct.storage.supabase.co'],
           upgradeInsecureRequests: null,
         },
       },
