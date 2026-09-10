@@ -1,0 +1,36 @@
+{
+  "warnings": [
+    "product Dárkový poukaz: no source content for locale(s) en",
+    "product BASS DRUM II.: no source content for locale(s) en",
+    "product BASS DRUM I.: no source content for locale(s) en",
+    "product Černá bavlněná mikina PELLWOOD Professional Drumsticks: no source content for locale(s) en",
+    "product Pánské tílko - bílé PELLWOOD Professional Drumsticks: no source content for locale(s) en",
+    "product Paličky s vlastním potiskem: no source content for locale(s) en",
+    "product Pánské tílko PELLWOOD Professional Drumsticks - černé: no source content for locale(s) en",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "link annotation has no href in Sanity - text kept, link dropped",
+    "menu Hlavni menu: no source content for locale(s) en",
+    "settings.metaCatalog has no field in the Strapi setting type - not imported"
+  ],
+  "errors": [],
+  "created": {
+    "categories": 4,
+    "archives": 4,
+    "products": 115,
+    "articles": 10,
+    "productLinks": 222,
+    "menus": 1
+  }
+}

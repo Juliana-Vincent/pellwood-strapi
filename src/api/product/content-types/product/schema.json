@@ -43,7 +43,7 @@
       }
     },
     "slug": {
-      "type": "uid",
+      "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -130,7 +130,7 @@
       }
     },
     "sort": {
-      "type": "integer",
+      "type": "decimal",
       "pluginOptions": {
         "i18n": {
           "localized": true
