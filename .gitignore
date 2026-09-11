@@ -129,3 +129,13 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+# import tooling — never in the repo
+.strapi-token
+image-map.json
+id-map.json
+import-report.json
+missing-images.json
+*.ndjson
+import-*.mjs
+audit-locales.mjs
+check-missing-images.mjs
