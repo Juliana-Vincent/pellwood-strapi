@@ -5,6 +5,7 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
     config: {
       provider: 'aws-s3',
       providerOptions: {
+        baseUrl: env('SUPABASE_PUBLIC_URL'),
         s3Options: {
           credentials: {
             accessKeyId: env('SUPABASE_S3_KEY'),
