@@ -21,6 +21,7 @@
     "city": { "type": "string" },
     "address": { "type": "string" },
     "code": { "type": "string" },
+    "orderDate": { "type": "datetime" },
     "anotherAddressCheck": { "type": "boolean", "default": false },
     "companyDataCheck": { "type": "boolean", "default": false },
     "anotherAdress": { "type": "json" },
