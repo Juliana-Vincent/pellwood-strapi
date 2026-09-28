@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": "Customer orders"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "idOrder": { "type": "integer", "required": true, "unique": true },
+    "email": { "type": "string" },
+    "phone": { "type": "string" },
+    "name": { "type": "string" },
+    "surname": { "type": "string" },
+    "currency": { "type": "string" },
+    "country": { "type": "string" },
+    "city": { "type": "string" },
+    "address": { "type": "string" },
+    "code": { "type": "string" },
+    "anotherAddressCheck": { "type": "boolean", "default": false },
+    "companyDataCheck": { "type": "boolean", "default": false },
+    "anotherAdress": { "type": "json" },
+    "companyData": { "type": "json" },
+    "status": { "type": "string" },
+    "state": { "type": "string", "default": "new" },
+    "note": { "type": "text" },
+    "basket": { "type": "json" },
+    "sum": { "type": "decimal" },
+    "paymentMethod": { "type": "string" },
+    "paymentPrice": { "type": "string" },
+    "payOnline": { "type": "boolean", "default": false },
+    "deliveryMethod": { "type": "string" },
+    "deliveryPrice": { "type": "string" },
+    "notified": { "type": "boolean", "default": false }
+  }
+}

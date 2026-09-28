@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "customers",
+  "info": {
+    "singularName": "customer",
+    "pluralName": "customers",
+    "displayName": "Customer",
+    "description": "Registered customers"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "email": { "type": "string", "required": true, "unique": true },
+    "password": { "type": "string" },
+    "phone": { "type": "string" },
+    "name": { "type": "string" },
+    "surname": { "type": "string" },
+    "country": { "type": "string" },
+    "city": { "type": "string" },
+    "address": { "type": "string" },
+    "code": { "type": "string" },
+    "anotherAdress": { "type": "json" },
+    "companyData": { "type": "json" },
+    "resetTokenHash": { "type": "string" },
+    "resetTokenExpires": { "type": "datetime" }
+  }
+}
