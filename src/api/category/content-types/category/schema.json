@@ -25,6 +25,15 @@
       },
       "required": true
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "sort": {
       "type": "integer",
       "pluginOptions": {
