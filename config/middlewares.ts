@@ -34,7 +34,16 @@ const config: Core.Config.Middlewares = [
   },
   'strapi::poweredBy',
   'strapi::query',
-  'strapi::body',
+  {
+    name: 'strapi::body',
+    config: {
+      // Rejects an oversized upload while it is still being received, rather than
+      // buffering up to formidable's 200 MB default first.
+      formidable: {
+        maxFileSize: 10 * 1024 * 1024,
+      },
+    },
+  },
   'strapi::session',
   'strapi::favicon',
     {
