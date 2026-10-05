@@ -36,6 +36,8 @@
     "payOnline": { "type": "boolean", "default": false },
     "deliveryMethod": { "type": "string" },
     "deliveryPrice": { "type": "string" },
-    "notified": { "type": "boolean", "default": false }
+    "notified": { "type": "boolean", "default": false },
+    "conversionSent": { "type": "boolean", "default": false },
+    "accessToken": { "type": "string" }
   }
 }

@@ -626,6 +626,12 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     >;
     products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     sort: Schema.Attribute.Integer &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -639,6 +645,49 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
+  collectionName: 'customers';
+  info: {
+    description: 'Registered customers';
+    displayName: 'Customer';
+    pluralName: 'customers';
+    singularName: 'customer';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    anotherAdress: Schema.Attribute.JSON;
+    city: Schema.Attribute.String;
+    code: Schema.Attribute.String;
+    companyData: Schema.Attribute.JSON;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::customer.customer'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    password: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    resetTokenExpires: Schema.Attribute.DateTime;
+    resetTokenHash: Schema.Attribute.String;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -765,6 +814,64 @@ export interface ApiMenuMenu extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    description: 'Customer orders';
+    displayName: 'Order';
+    pluralName: 'orders';
+    singularName: 'order';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    accessToken: Schema.Attribute.String;
+    address: Schema.Attribute.String;
+    anotherAddressCheck: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    anotherAdress: Schema.Attribute.JSON;
+    basket: Schema.Attribute.JSON;
+    city: Schema.Attribute.String;
+    code: Schema.Attribute.String;
+    companyData: Schema.Attribute.JSON;
+    companyDataCheck: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    conversionSent: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.String;
+    deliveryMethod: Schema.Attribute.String;
+    deliveryPrice: Schema.Attribute.String;
+    email: Schema.Attribute.String;
+    idOrder: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    note: Schema.Attribute.Text;
+    notified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    orderDate: Schema.Attribute.DateTime;
+    paymentMethod: Schema.Attribute.String;
+    paymentPrice: Schema.Attribute.String;
+    payOnline: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.String & Schema.Attribute.DefaultTo<'new'>;
+    status: Schema.Attribute.String;
+    sum: Schema.Attribute.Decimal;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1478,8 +1585,10 @@ declare module '@strapi/strapi' {
       'api::archive.archive': ApiArchiveArchive;
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
+      'api::customer.customer': ApiCustomerCustomer;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::menu.menu': ApiMenuMenu;
+      'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
       'api::setting.setting': ApiSettingSetting;
       'plugin::content-releases.release': PluginContentReleasesRelease;

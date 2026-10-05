@@ -17,7 +17,21 @@ const config: Core.Config.Middlewares = [
       },
     },
   },
-  'strapi::cors',
+  {
+    name: 'strapi::cors',
+    config: {
+      // Strapi's default is origin '*' WITH credentials: true, and its matcher
+      // reflects the caller's own origin back when the list contains '*'. That is
+      // the reflected-origin pattern a literal wildcard normally prevents: any page
+      // a signed-in admin visits could make credentialed calls here and read the
+      // responses. Pin it to the storefronts instead.
+      origin: (process.env.CORS_ORIGINS || 'https://pellwood.com,https://pellwood.hardart.cz')
+        .split(',')
+        .map((o) => o.trim())
+        .filter(Boolean),
+      credentials: true,
+    },
+  },
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
