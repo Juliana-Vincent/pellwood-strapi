@@ -15,6 +15,9 @@
     },
     "payOnline": {
       "type": "boolean"
+    },
+    "countries": {
+      "type": "string"
     }
   },
   "config": {}
