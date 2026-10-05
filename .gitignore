@@ -139,3 +139,4 @@ missing-images.json
 import-*.mjs
 audit-locales.mjs
 check-missing-images.mjs
+types/generated/

@@ -23,6 +23,7 @@
     "anotherAdress": { "type": "json" },
     "companyData": { "type": "json" },
     "resetTokenHash": { "type": "string" },
-    "resetTokenExpires": { "type": "datetime" }
+    "resetTokenExpires": { "type": "datetime" },
+    "tokenVersion": { "type": "integer", "default": 0 }
   }
 }
