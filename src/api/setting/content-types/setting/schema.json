@@ -85,6 +85,16 @@
           "localized": true
         }
       }
+    },
+    "shipping": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.country-shipping",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

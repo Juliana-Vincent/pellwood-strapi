@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_country_shippings",
+  "info": {
+    "displayName": "Country shipping",
+    "description": "Delivery and payment options offered for one country"
+  },
+  "options": {},
+  "attributes": {
+    "country": {
+      "type": "enumeration",
+      "enum": ["cz", "sk", "de", "at"],
+      "required": true
+    },
+    "deliveryOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.shipping"
+    },
+    "paymentOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.shipping"
+    }
+  }
+}
