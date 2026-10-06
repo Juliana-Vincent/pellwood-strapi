@@ -34,6 +34,8 @@ const config: Core.Config.Middlewares = [
   },
   'strapi::poweredBy',
   'strapi::query',
+  // src/middlewares/no-public-drafts.ts - see the comment there.
+  'global::no-public-drafts',
   {
     name: 'strapi::body',
     config: {
