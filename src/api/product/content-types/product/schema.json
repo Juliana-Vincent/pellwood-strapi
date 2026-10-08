@@ -106,7 +106,7 @@
       "required": true
     },
     "length": {
-      "type": "decimal",
+      "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -115,7 +115,7 @@
       "min": 0
     },
     "diameter": {
-      "type": "decimal",
+      "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": false

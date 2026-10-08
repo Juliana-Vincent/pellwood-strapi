@@ -3,8 +3,8 @@ import { ShoppingCart } from '@strapi/icons';
 
 export default {
   config: {
-    // Czech for the shop owner, and it also makes the number inputs accept a
-    // decimal comma ("14,4"), which is how prices and sizes are written here.
+    // Czech for the shop owner. Each person still picks their own language under
+    // Settings -> Profile.
     locales: ['cs'],
   },
   register(app: StrapiApp) {

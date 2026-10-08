@@ -27,8 +27,6 @@ const MAP = {
   process: 'packed',
   processing: 'packed',
   vyrizuje: 'packed',
-  process: 'packed',
-  processing: 'packed',
   zpracovava: 'packed',
   pripraveno: 'packed',
   send: 'shipped',

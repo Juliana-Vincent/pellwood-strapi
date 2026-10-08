@@ -32,6 +32,10 @@ const toNumber = (value) => {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 };
 
+/** What goes in the field: the number as it was written, without the unit, so a
+ *  Czech "14,4 mm" stays "14,4" rather than turning into "14.4". */
+const toText = (value) => String(value || '').replace(/mm/gi, '').trim();
+
 /** Groups the component rows by product and decides what each one should get. */
 function plan(rows) {
   const docs = new Map();
@@ -48,12 +52,14 @@ function plan(rows) {
       }
       continue;
     }
-    const entry = docs.get(row.document_id) || { title: row.title, length: new Set(), diameter: new Set() };
+    const entry = docs.get(row.document_id) || { title: row.title, length: new Map(), diameter: new Map() };
     const number = toNumber(row.value);
     if (number === null) {
       oddities.push(`${row.locale} "${row.title}": ${row.param} = "${row.value}" is not a single number`);
     } else {
-      entry[which].add(number);
+      // Keyed by the number so the two locales agree even when one wrote 14,4 and
+      // the other 14.4; the text is what actually gets stored.
+      entry[which].set(number, toText(row.value));
     }
     docs.set(row.document_id, entry);
   }
@@ -61,12 +67,12 @@ function plan(rows) {
   const updates = [];
   const conflicts = [];
   for (const [documentId, entry] of docs) {
-    const pick = (set) => (set.size === 0 ? undefined : set.size > 1 ? 'conflict' : [...set][0]);
+    const pick = (map) => (map.size === 0 ? undefined : map.size > 1 ? 'conflict' : [...map.values()][0]);
     const length = pick(entry.length);
     const diameter = pick(entry.diameter);
     if (length === 'conflict' || diameter === 'conflict') {
       conflicts.push(
-        `"${entry.title}": length ${[...entry.length].join('/') || '-'}, diameter ${[...entry.diameter].join('/') || '-'}`,
+        `"${entry.title}": length ${[...entry.length.values()].join('/') || '-'}, diameter ${[...entry.diameter.values()].join('/') || '-'}`,
       );
       continue;
     }
@@ -147,7 +153,7 @@ async function main() {
     for (const update of updates) {
       // Every row of the document at once: both locales, draft and published.
       const result = await client.query(
-        'UPDATE api_products SET length = COALESCE($1::numeric, length), diameter = COALESCE($2::numeric, diameter) WHERE document_id = $3',
+        'UPDATE api_products SET length = COALESCE($1::text, length), diameter = COALESCE($2::text, diameter) WHERE document_id = $3',
         [update.length ?? null, update.diameter ?? null, update.documentId],
       );
       changed += result.rowCount;
