@@ -97,6 +97,24 @@
       },
       "required": true
     },
+    "length": {
+      "type": "decimal",
+      "min": 0,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "diameter": {
+      "type": "decimal",
+      "min": 0,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "parametrs": {
       "type": "component",
       "pluginOptions": {
