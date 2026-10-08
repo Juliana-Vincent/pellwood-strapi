@@ -41,15 +41,6 @@
         }
       }
     },
-    "description": {
-      "type": "blocks",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": false
-    },
     "articles": {
       "type": "relation",
       "relation": "oneToMany",

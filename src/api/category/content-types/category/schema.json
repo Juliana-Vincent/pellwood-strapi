@@ -27,23 +27,15 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "title",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "targetField": "title"
     },
     "sort": {
       "type": "integer",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "description": {
-      "type": "blocks",
       "pluginOptions": {
         "i18n": {
           "localized": true
