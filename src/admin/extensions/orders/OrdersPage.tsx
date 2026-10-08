@@ -228,8 +228,18 @@ const OrdersPage = () => {
       />
       <Layouts.Content>
         <Flex gap={4} marginBottom={6} alignItems="stretch">
-          <SummaryCard label="Čeká na platbu" value={counts.unpaid} onClick={() => setTab('unpaid')} />
-          <SummaryCard label="K odeslání" value={counts.toship} onClick={() => setTab('toship')} />
+          <SummaryCard
+            label="Čeká na platbu"
+            value={counts.unpaid}
+            tone="warning600"
+            onClick={() => setTab('unpaid')}
+          />
+          <SummaryCard
+            label="K odeslání"
+            value={counts.toship}
+            tone="danger600"
+            onClick={() => setTab('toship')}
+          />
           <SummaryCard label="Dnes přijato" value={counts.today} />
         </Flex>
 
@@ -395,10 +405,12 @@ const OrdersPage = () => {
 const SummaryCard = ({
   label,
   value,
+  tone = 'neutral800',
   onClick,
 }: {
   label: string;
   value: number;
+  tone?: 'warning600' | 'danger600' | 'neutral800';
   onClick?: () => void;
 }) => (
   <Box
@@ -409,13 +421,17 @@ const SummaryCard = ({
     width="200px"
     tag={onClick ? 'button' : 'div'}
     onClick={onClick}
-    style={onClick ? { cursor: 'pointer', textAlign: 'left' } : undefined}
+    // A <button> takes the browser's own black text colour, which disappears on
+    // the dark theme - hence colour set explicitly on both the box and the number.
+    style={onClick ? { cursor: 'pointer', textAlign: 'left', color: 'inherit', border: 'none' } : undefined}
   >
     <Typography variant="pi" textColor="neutral600">
       {label}
     </Typography>
     <Box paddingTop={1}>
-      <Typography variant="alpha">{value}</Typography>
+      <Typography variant="alpha" textColor={tone}>
+        {value}
+      </Typography>
     </Box>
   </Box>
 );
