@@ -49,6 +49,13 @@
     "deliveryPrice": { "type": "string" },
     "notified": { "type": "boolean", "default": false },
     "conversionSent": { "type": "boolean", "default": false },
-    "accessToken": { "type": "string" }
+    "accessToken": { "type": "string" },
+    "searchText": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": { "visible": false },
+        "content-type-builder": { "visible": false }
+      }
+    }
   }
 }

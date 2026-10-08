@@ -18,9 +18,50 @@ const firstValue = (rows: Row[], field: string) => {
   return row ? row[field] : undefined;
 };
 
+/**
+ * Searching orders by name has to ignore Czech accents: a shop owner types
+ * "novak" and expects Nováková. Postgres compares á and a as different letters
+ * and the unaccent extension needs rights this database user does not have, so
+ * each order carries an accent-free copy of the fields worth searching and the
+ * admin searches that instead.
+ */
+const stripAccents = (value: unknown) =>
+  String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+
+const ORDER_SEARCH_FIELDS = ['idOrder', 'name', 'surname', 'email', 'phone', 'city'];
+
+export const orderSearchText = (order: Record<string, unknown>) =>
+  ORDER_SEARCH_FIELDS.map((field) => stripAccents(order?.[field]))
+    .filter(Boolean)
+    .join(' ')
+    .slice(0, 255);
+
 export default {
   register({ strapi }: { strapi: any }) {
     strapi.documents.use(async (context: any, next: any) => {
+      if (context.uid === 'api::order.order' && ['create', 'update'].includes(context.action)) {
+        const result = await next();
+        try {
+          const documentId = result?.documentId || context.params?.documentId;
+          if (documentId) {
+            const query = strapi.db.query('api::order.order');
+            const [order] = await query.findMany({
+              where: { documentId },
+              select: ['id', ...ORDER_SEARCH_FIELDS],
+            });
+            if (order) {
+              await query.updateMany({ where: { documentId }, data: { searchText: orderSearchText(order) } });
+            }
+          }
+        } catch (err) {
+          strapi.log.error(`Could not index the order for search: ${(err as Error).message}`);
+        }
+        return result;
+      }
+
       if (context.uid !== 'api::product.product' || !SYNCED_ACTIONS.includes(context.action)) {
         return next();
       }

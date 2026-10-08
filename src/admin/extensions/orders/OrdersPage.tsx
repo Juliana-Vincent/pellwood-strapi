@@ -58,6 +58,21 @@ const orderCount = (count: number) => {
   return `${count} objednávek`;
 };
 
+/**
+ * Czech names are searched without their accents: the order carries an
+ * accent-free copy of its name, e-mail and city (searchText), so "novak" finds
+ * Nováková. % and _ are escaped because Strapi compiles $containsi to a LIKE.
+ */
+const searchFilter = (query: string): Record<string, string> => {
+  const normalized = query
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[\\%_]/g, (match) => `\\${match}`)
+    .trim();
+  return normalized ? { 'filters[searchText][$containsi]': normalized } : {};
+};
+
 const toQuery = (params: Record<string, string | number>) =>
   Object.entries(params)
     .filter(([, value]) => value !== '' && value !== undefined)
@@ -127,7 +142,7 @@ const OrdersPage = () => {
         'sort[0]': 'orderDate:DESC',
         'sort[1]': 'createdAt:DESC',
         ...TAB_FILTERS[tab],
-        ...(query ? { _q: query } : {}),
+        ...searchFilter(query),
       };
       const { data } = await get(`/content-manager/collection-types/${UID}?${toQuery(params)}`);
       setRows(data?.results || []);
