@@ -4,7 +4,7 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "Product",
+    "displayName": "Produkty",
     "description": ""
   },
   "options": {
@@ -24,6 +24,14 @@
         }
       },
       "required": true
+    },
+    "SEOtitle": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "SEOdescription": {
       "type": "text",
@@ -99,21 +107,21 @@
     },
     "length": {
       "type": "decimal",
-      "min": 0,
       "pluginOptions": {
         "i18n": {
           "localized": false
         }
-      }
+      },
+      "min": 0
     },
     "diameter": {
       "type": "decimal",
-      "min": 0,
       "pluginOptions": {
         "i18n": {
           "localized": false
         }
-      }
+      },
+      "min": 0
     },
     "parametrs": {
       "type": "component",
@@ -129,14 +137,6 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product"
-    },
-    "SEOtitle": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
     },
     "sort": {
       "type": "decimal",

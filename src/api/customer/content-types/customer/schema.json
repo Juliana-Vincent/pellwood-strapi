@@ -4,7 +4,7 @@
   "info": {
     "singularName": "customer",
     "pluralName": "customers",
-    "displayName": "Customer",
+    "displayName": "Zákazníci",
     "description": "Registered customers"
   },
   "options": {
