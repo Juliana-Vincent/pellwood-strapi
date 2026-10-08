@@ -26,8 +26,19 @@
     "companyDataCheck": { "type": "boolean", "default": false },
     "anotherAdress": { "type": "json" },
     "companyData": { "type": "json" },
-    "status": { "type": "string" },
-    "state": { "type": "string", "default": "new" },
+    "paymentStatus": { "type": "string" },
+    "status": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": { "visible": false },
+        "content-type-builder": { "visible": false }
+      }
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": ["new", "packed", "shipped", "delivered", "cancelled"],
+      "default": "new"
+    },
     "note": { "type": "text" },
     "basket": { "type": "json" },
     "sum": { "type": "decimal" },

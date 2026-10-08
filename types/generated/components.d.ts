@@ -38,6 +38,20 @@ export interface SharedChapter extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCountryShipping extends Struct.ComponentSchema {
+  collectionName: 'components_shared_country_shippings';
+  info: {
+    description: 'Delivery and payment options offered for one country';
+    displayName: 'Country shipping';
+  };
+  attributes: {
+    country: Schema.Attribute.Enumeration<['cz', 'sk', 'de', 'at']> &
+      Schema.Attribute.Required;
+    deliveryOptions: Schema.Attribute.Component<'shared.shipping', true>;
+    paymentOptions: Schema.Attribute.Component<'shared.shipping', true>;
+  };
+}
+
 export interface SharedFooterItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_footer_items';
   info: {
@@ -80,6 +94,7 @@ export interface SharedShipping extends Struct.ComponentSchema {
     displayName: 'Shipping';
   };
   attributes: {
+    countries: Schema.Attribute.String;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     payOnline: Schema.Attribute.Boolean;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
@@ -106,6 +121,7 @@ declare module '@strapi/strapi' {
       'shared.banner': SharedBanner;
       'shared.button': SharedButton;
       'shared.chapter': SharedChapter;
+      'shared.country-shipping': SharedCountryShipping;
       'shared.footer-item': SharedFooterItem;
       'shared.menu-item': SharedMenuItem;
       'shared.parameter': SharedParameter;
