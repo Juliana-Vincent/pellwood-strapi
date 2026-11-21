@@ -7,7 +7,8 @@
  *
  * - Matches by email, case-insensitive.
  * - Only fills customers whose password is empty; never overwrites an existing one.
- * - Only copies bcrypt hashes ($2a/$2b/$2y), which is what the new login checks.
+ * - Copies bcrypt hashes ($2a/$2b/$2y) as they are. The old site stored plain-text
+ *   passwords; pass --plain to bcrypt-hash those on the way in.
  * - Never prints a hash. Safe to run more than once.
  *
  * users.json may be a JSON array or one document per line (mongoexport default).
@@ -55,10 +56,20 @@ const isBcrypt = (h) => typeof h === "string" && /^\$2[aby]\$\d\d\$.{53}$/.test(
 async function main() {
   const args = process.argv.slice(2);
   const apply = args.includes("--apply");
+  const plain = args.includes("--plain");
   const file = args.find((a) => !a.startsWith("--"));
   if (!file) {
-    console.error("Usage: node scripts/import-customer-passwords.js <users.json> [--apply]");
+    console.error("Usage: node scripts/import-customer-passwords.js <users.json> [--plain] [--apply]");
     process.exit(1);
+  }
+  let bcrypt = null;
+  if (plain) {
+    try {
+      bcrypt = require("bcryptjs");
+    } catch {
+      console.error("--plain needs bcryptjs. Run: npm i --no-save bcryptjs");
+      process.exit(1);
+    }
   }
 
   loadEnv(path.join(process.cwd(), ".env"));
@@ -66,18 +77,27 @@ async function main() {
 
   // email -> hash, flagging addresses that appear twice with different hashes
   const old = new Map();
+  const rawOf = new Map();
   const conflicts = new Set();
   let notBcrypt = 0;
   for (const u of users) {
     const email = norm(u.email);
     if (!email) continue;
-    if (!isBcrypt(u.password)) {
-      notBcrypt++;
-      console.log(`skip  ${short(email)}: old password is ${u.password ? "not bcrypt" : "empty"}`);
-      continue;
+    let hash = u.password;
+    if (!isBcrypt(hash)) {
+      // The old site stored passwords in plain text. With --plain they are hashed
+      // here, so the customer keeps their password and no plain text reaches Strapi.
+      if (plain && typeof hash === "string" && hash.length > 0) {
+        hash = await bcrypt.hash(hash, 10);
+      } else {
+        notBcrypt++;
+        console.log(`skip  ${short(email)}: old password is ${u.password ? "not bcrypt (use --plain)" : "empty"}`);
+        continue;
+      }
     }
-    if (old.has(email) && old.get(email) !== u.password) conflicts.add(email);
-    old.set(email, u.password);
+    if (old.has(email) && rawOf.get(email) !== u.password) conflicts.add(email);
+    old.set(email, hash);
+    rawOf.set(email, u.password);
   }
 
   const client = new Client(dbConfig());
