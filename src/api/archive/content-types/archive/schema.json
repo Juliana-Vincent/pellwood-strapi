@@ -41,6 +41,15 @@
         }
       }
     },
+    "showInMenu": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "articles": {
       "type": "relation",
       "relation": "oneToMany",
