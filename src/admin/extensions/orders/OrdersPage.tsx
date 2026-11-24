@@ -212,9 +212,11 @@ const OrdersPage = () => {
     return (
       <Page.Main>
         <Page.Title>Objednávka</Page.Title>
-        <Layouts.Content>
-          <OrderDetail documentId={openId} onBack={closeOrder} />
-        </Layouts.Content>
+        <Box paddingTop={8}>
+          <Layouts.Content>
+            <OrderDetail documentId={openId} onBack={closeOrder} />
+          </Layouts.Content>
+        </Box>
       </Page.Main>
     );
   }
