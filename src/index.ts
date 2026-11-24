@@ -1,6 +1,7 @@
 /**
- * Length and diameter describe the stick, not its wording, so they are the same
- * number in Czech and in English and the editor fills them in once.
+ * Length, diameter and the EAN of a product without variants describe the stick,
+ * not its wording, so they are the same in Czech and in English and the editor
+ * fills them in once.
  *
  * The schema marks them as not localized, which makes Strapi write them to every
  * locale of the product - but it writes whatever the payload holds, so a save that
@@ -8,7 +9,7 @@
  * wipes the number everywhere. This keeps them: the values are read before the
  * write and put back unless the editor actually changed or cleared them.
  */
-const SHARED_PRODUCT_FIELDS = ['length', 'diameter'] as const;
+const SHARED_PRODUCT_FIELDS = ['length', 'diameter', 'ean'] as const;
 const SYNCED_ACTIONS = ['update', 'publish', 'unpublish', 'discardDraft'];
 
 type Row = Record<string, unknown>;
@@ -39,11 +40,59 @@ export const orderSearchText = (order: Record<string, unknown>) =>
     .join(' ')
     .slice(0, 255);
 
+/**
+ * Moving an order to "Vyřizuje se" e-mails the customer. The shop (Next.js) owns
+ * the e-mail templates and the mail account, so Strapi only tells it which order
+ * changed; the shop re-reads the order itself and sends at most one such e-mail
+ * per order (processingNotified). ORDER_EMAIL_SECRET must be the same value in
+ * both apps' .env. Never awaited: a mail problem must not cost the admin the save.
+ */
+const notifyProcessing = (strapi: any, documentId: string) => {
+  const secret = process.env.ORDER_EMAIL_SECRET;
+  if (!secret) {
+    strapi.log.warn('ORDER_EMAIL_SECRET is not set - no "Vyřizuje se" e-mail was sent.');
+    return;
+  }
+  const base = (process.env.CLIENT_INTERNAL_URL || 'http://127.0.0.1:4502').replace(/\/$/, '');
+  const request = (globalThis as any).fetch(`${base}/api/order/status-email`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-internal-secret': secret },
+    body: JSON.stringify({ documentId }),
+    signal: (AbortSignal as any).timeout(20000),
+  });
+  request
+    .then(async (res: any) => {
+      if (!res.ok) strapi.log.error(`"Vyřizuje se" e-mail failed: ${res.status} ${await res.text()}`);
+    })
+    .catch((err: Error) => strapi.log.error(`"Vyřizuje se" e-mail failed: ${err.message}`));
+};
+
 export default {
   register({ strapi }: { strapi: any }) {
     strapi.documents.use(async (context: any, next: any) => {
       if (context.uid === 'api::order.order' && ['create', 'update'].includes(context.action)) {
+        const incomingState = context.params?.data?.state;
+        let previousState: string | null | undefined;
+        if (context.action === 'update' && incomingState === 'processing' && context.params?.documentId) {
+          try {
+            const before = await strapi.db
+              .query('api::order.order')
+              .findOne({ where: { documentId: context.params.documentId }, select: ['state'] });
+            previousState = before?.state;
+          } catch (err) {
+            strapi.log.error(`Could not read the order state: ${(err as Error).message}`);
+          }
+        }
+
         const result = await next();
+
+        // The full edit form sends the state with every save, so only an actual
+        // change counts.
+        if (context.action === 'update' && incomingState === 'processing' && previousState !== 'processing') {
+          const documentId = result?.documentId || context.params?.documentId;
+          if (documentId) notifyProcessing(strapi, documentId);
+        }
+
         try {
           const documentId = result?.documentId || context.params?.documentId;
           if (documentId) {

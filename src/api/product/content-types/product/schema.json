@@ -114,6 +114,14 @@
       },
       "min": 0
     },
+    "ean": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "diameter": {
       "type": "string",
       "pluginOptions": {

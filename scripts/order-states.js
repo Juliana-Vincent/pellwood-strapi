@@ -1,9 +1,5 @@
 /**
- * Reports what sits in orders.state / orders.status today, and with --apply maps
- * legacy values onto the new enum. Read-only without --apply.
- *
- *   node scripts/order-states.js
- *   node scripts/order-states.js --apply
+ * Reports what sits in orders.state / orders.status today, and with --apply maps legacy values onto the new enum.
  */
 const fs = require('fs');
 const path = require('path');
@@ -43,7 +39,7 @@ const MAP = {
   zruseno: 'cancelled',
 };
 
-const ALLOWED = ['new', 'packed', 'shipped', 'delivered', 'cancelled'];
+const ALLOWED = ['new', 'processing', 'packed', 'shipped', 'delivered', 'cancelled'];
 
 (async () => {
   const apply = process.argv.includes('--apply');

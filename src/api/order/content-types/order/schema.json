@@ -36,7 +36,7 @@
     },
     "state": {
       "type": "enumeration",
-      "enum": ["new", "packed", "shipped", "delivered", "cancelled"],
+      "enum": ["new", "processing", "packed", "shipped", "delivered", "cancelled"],
       "default": "new"
     },
     "note": { "type": "text" },
@@ -48,6 +48,14 @@
     "deliveryMethod": { "type": "string" },
     "deliveryPrice": { "type": "string" },
     "notified": { "type": "boolean", "default": false },
+    "processingNotified": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": { "visible": false },
+        "content-type-builder": { "visible": false }
+      }
+    },
     "conversionSent": { "type": "boolean", "default": false },
     "accessToken": { "type": "string" },
     "searchText": {

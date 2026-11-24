@@ -28,6 +28,7 @@ import {
   stateLook,
   Order,
   PAYMENT,
+  rowTint,
   STATES,
 } from './orderStatus';
 
@@ -38,7 +39,11 @@ const PAGE_SIZE = 50;
 const TAB_FILTERS: Record<string, Record<string, string>> = {
   all: {},
   unpaid: { 'filters[payOnline][$eq]': 'true', 'filters[paymentStatus][$eq]': 'PENDING' },
-  toship: { 'filters[state][$in][0]': 'new', 'filters[state][$in][1]': 'packed' },
+  toship: {
+    'filters[state][$in][0]': 'new',
+    'filters[state][$in][1]': 'processing',
+    'filters[state][$in][2]': 'packed',
+  },
   sent: { 'filters[state][$in][0]': 'shipped', 'filters[state][$in][1]': 'delivered' },
   cancelled: { 'filters[$or][0][state][$eq]': 'cancelled', 'filters[$or][1][paymentStatus][$eq]': 'CANCELLED' },
 };
@@ -316,9 +321,10 @@ const OrdersPage = () => {
                     const payment = PAYMENT[paymentKey(order)];
                     const items = itemCount(order.basket);
                     const isNew = order.state === 'new';
+                    const tint = rowTint(order.state);
                     return (
-                      <Tr key={order.documentId}>
-                        <Td>
+                      <Tr key={order.documentId} style={tint.row}>
+                        <Td style={tint.stripe}>
                           <Typography
                             tag="a"
                             href={`#order=${order.documentId}`}

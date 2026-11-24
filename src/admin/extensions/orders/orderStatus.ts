@@ -50,14 +50,43 @@ export const paymentKey = (order: Order): keyof typeof PAYMENT => {
   }
 };
 
-/** Fulfilment is set by hand in the admin. */
+/**
+ * Fulfilment is set by hand in the admin. Switching an order to "Vyřizuje se"
+ * e-mails the customer (src/index.ts); the shipping notice comes from the carrier.
+ */
 export const STATES: Array<{ value: string; label: string; variant: Look['variant'] }> = [
-  { value: 'new', label: 'Nová', variant: 'warning' },
+  { value: 'new', label: 'Nová', variant: 'primary' },
+  { value: 'processing', label: 'Vyřizuje se', variant: 'warning' },
   { value: 'packed', label: 'Připraveno', variant: 'alternative' },
-  { value: 'shipped', label: 'Odesláno', variant: 'primary' },
+  { value: 'shipped', label: 'Odesláno', variant: 'neutral' },
   { value: 'delivered', label: 'Doručeno', variant: 'success' },
   { value: 'cancelled', label: 'Zrušeno', variant: 'danger' },
 ];
+
+/**
+ * The tint behind a whole row in the order list. The design system's light "100"
+ * shades all turn the same grey in the dark theme, so the row uses the "500"
+ * shade (alike in both themes) at low opacity, plus a solid stripe on the left.
+ */
+const TONE: Record<Look['variant'], string> = {
+  primary: '#4945ff',
+  warning: '#f29d41',
+  alternative: '#ac73e6',
+  neutral: '#8e8ea9',
+  success: '#5cb176',
+  danger: '#ee5e52',
+  secondary: '#66b7f1',
+};
+
+export const rowTint = (state?: string | null) => {
+  const found = STATES.find((s) => s.value === state);
+  if (!found) return { row: undefined, stripe: undefined };
+  const color = TONE[found.variant];
+  return {
+    row: { background: `${color}1f` },
+    stripe: { boxShadow: `inset 4px 0 0 ${color}` },
+  };
+};
 
 export const stateLook = (state?: string | null): Look => {
   const found = STATES.find((s) => s.value === state);

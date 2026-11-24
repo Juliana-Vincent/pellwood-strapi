@@ -17,6 +17,9 @@
     },
     "weight": {
       "type": "string"
+    },
+    "ean": {
+      "type": "string"
     }
   }
 }
