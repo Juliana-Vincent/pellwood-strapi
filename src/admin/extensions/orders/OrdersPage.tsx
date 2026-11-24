@@ -91,6 +91,18 @@ const hashId = () => {
   return match ? match[1] : '';
 };
 
+/**
+ * The design system caps every dropdown at about four rows, so the six order
+ * states needed scrolling. Lets the status list grow to the room on screen. The
+ * list renders outside this page (in a portal), hence a style tag rather than a
+ * prop; it exists only while the orders page is open.
+ */
+const FIT_DROPDOWN = `
+  [role='listbox']:has([data-radix-select-viewport]) {
+    max-height: var(--radix-select-content-available-height, 32rem);
+  }
+`;
+
 const OrdersPage = () => {
   const { get, put } = useFetchClient();
   const { toggleNotification } = useNotification();
@@ -211,6 +223,7 @@ const OrdersPage = () => {
   if (openId) {
     return (
       <Page.Main>
+        <style>{FIT_DROPDOWN}</style>
         <Page.Title>Objednávka</Page.Title>
         <Box paddingTop={8}>
           <Layouts.Content>
@@ -223,6 +236,7 @@ const OrdersPage = () => {
 
   return (
     <Page.Main>
+      <style>{FIT_DROPDOWN}</style>
       <Page.Title>Objednávky</Page.Title>
       <Layouts.Header
         title="Objednávky"
